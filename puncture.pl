@@ -190,6 +190,9 @@ sub createCSource {
 #include <pwd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <time.h>
 
 /***********************************************************************************************************************************************************
  * populate_puncture_source: the source of the actual puncture file... 
@@ -510,22 +513,22 @@ int main (int argc, char **argv) {
   #
   # we have used {{ and }} to encapsulate some of the variables we want to interpolate... so interpolate now... 
   #
-  $source =~ s/{{command_line}}/$command_line/g;
-  $source =~ s/{{timenow}}/$timenow/g;
-  $source =~ s/{{version}}/$version/g;
-  $source =~ s/{{hide_punctures_in}}/$hide_punctures_in/g;
-  $source =~ s/{{debug_trojan_binary}}/$debug_trojan_binary/g;
-  $source =~ s/{{self_destruct_on_first_run}}/$self_destruct_on_first_run/g;
-  $source =~ s/{{self_destruct_on_successful_puncture}}/$self_destruct_on_successful_puncture/g;
-  $source =~ s/{{puncture_only_username}}/$puncture_only_username/g;
-  $source =~ s/{{emulate}}/$emulate/g;
+  $source =~ s/\{\{command_line\}\}/$command_line/g;
+  $source =~ s/\{\{timenow\}\}/$timenow/g;
+  $source =~ s/\{\{version\}\}/$version/g;
+  $source =~ s/\{\{hide_punctures_in\}\}/$hide_punctures_in/g;
+  $source =~ s/\{\{debug_trojan_binary\}\}/$debug_trojan_binary/g;
+  $source =~ s/\{\{self_destruct_on_first_run\}\}/$self_destruct_on_first_run/g;
+  $source =~ s/\{\{self_destruct_on_successful_puncture\}\}/$self_destruct_on_successful_puncture/g;
+  $source =~ s/\{\{puncture_only_username\}\}/$puncture_only_username/g;
+  $source =~ s/\{\{emulate\}\}/$emulate/g;
 
   #
   # the source_size calculated here is taht of the trojan binary source, but we actually only need the source of the puncture binary as a minimum... 
   # but as the puncture file source is embedded in the trojan source, we are sure to be safe by allocating enough memory by using the trojan source size... 
   #
   my $source_size = length($source);
-  $source =~ s/{{source_size}}/$source_size/g;
+  $source =~ s/\{\{source_size\}\}/$source_size/g;
 
   #
   #
